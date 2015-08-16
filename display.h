@@ -3,13 +3,16 @@
 
 #include <QWidget>
 
+class QLabel;
+
 class Display : public QWidget
 {
     Q_OBJECT
 public:
     explicit Display(QWidget *parent = 0);
 
-signals:
+private:
+    QLabel *l;
 
 public slots:
     void SetValue(const QMap<QString, QString>& vals);
