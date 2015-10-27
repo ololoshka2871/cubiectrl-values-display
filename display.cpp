@@ -68,7 +68,7 @@ void ValuesDisplay::SetValue(const QMap<QString, QString> &vals)
 
 void ValuesDisplay::setVisible(bool visible)
 {
-    ignore_updates = visible;
+    ignore_updates = !visible;
     QWidget::setVisible(visible);
 }
 
