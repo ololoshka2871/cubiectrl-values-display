@@ -12,6 +12,7 @@
 ValuesDisplay::ValuesDisplay(bool test, QWidget *parent) : QWidget(parent)
 {
     ignore_updates = true;
+    setCursor(Qt::BlankCursor);
     if (test)
     {
         // test keys:
