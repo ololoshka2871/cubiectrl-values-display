@@ -1,5 +1,6 @@
 #include <QApplication>
 #include <QDebug>
+#include <QImage>
 
 #include "display.h"
 #include "controlsocket.h"
@@ -13,8 +14,12 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    Display w;
     controlSocket s(QObject::trUtf8(argv[1]));
+
+    ValuesDisplay w(s.istest());
+    QPalette p = w.palette();
+    p.setBrush(QPalette::Background, *(new QBrush(*(new QPixmap(":/bkg.jpg")))));
+    w.setPalette(p);
 
     QObject::connect(&s, SIGNAL(Hide()), &w, SLOT(hide()));
     QObject::connect(&s, SIGNAL(Show()), &w, SLOT(showFullScreen()));

@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QMap>
+#include <QVector>
 
 class QLocalSocket;
 
@@ -12,6 +13,7 @@ class controlSocket : public QObject
 
 public:
     controlSocket(const QString &socketFileName, QObject *parent = NULL);
+    bool istest() const;
 
 signals:
     void Hide();
@@ -20,6 +22,11 @@ signals:
 
 private:
     QLocalSocket* socket;
+    QVector<QString> keys;
+    bool testFirstSignal;
+
+protected:
+    virtual void timerEvent(QTimerEvent *e);
 
 private slots:
     void processCmd();

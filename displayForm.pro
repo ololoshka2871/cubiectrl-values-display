@@ -21,3 +21,6 @@ HEADERS  += \
     controlsocket.h
 
 FORMS    +=
+
+RESOURCES += \
+    res.qrc

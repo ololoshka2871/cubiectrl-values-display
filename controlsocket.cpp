@@ -1,6 +1,7 @@
 #include <QLocalSocket>
 #include <QDebug>
 #include <QApplication>
+#include <QStringList>
 
 #include "controlsocket.h"
 
@@ -9,10 +10,44 @@
 controlSocket::controlSocket(const QString &socketFileName, QObject *parent) :
     QObject(parent)
 {
-    socket = new QLocalSocket(this);
-    socket->connectToServer(socketFileName);
+    if (socketFileName == "test")
+    {
+        keys << "CPU_Temp" << "GPU_Temp" << "SPIN1" << "SPIN2" << "flow1" << "flow2";
+        testFirstSignal = true;
+        startTimer(100);
+    }
+    else
+    {
+        socket = new QLocalSocket(this);
+        socket->connectToServer(socketFileName);
 
-    connect(socket, SIGNAL(readyRead()), this, SLOT(processCmd()));
+        connect(socket, SIGNAL(readyRead()), this, SLOT(processCmd()));
+    }
+}
+
+bool controlSocket::istest() const
+{
+    return !keys.isEmpty();
+}
+
+static int rnd(int Low, int High)
+{
+    return qrand() % ((High + 1) - Low) + Low;
+}
+
+void controlSocket::timerEvent(QTimerEvent *e)
+{
+    Q_UNUSED(e);
+    if (testFirstSignal)
+    {
+        testFirstSignal = false;
+        emit Show();
+    }
+
+    int index = rnd(0, keys.size() -1);
+    QMap<QString, QString> res;
+    res[keys.at(index)] = QString::number(rnd(10, 1000));
+    emit Update(res);
 }
 
 void controlSocket::processCmd()
