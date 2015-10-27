@@ -11,8 +11,6 @@
 
 ValuesDisplay::ValuesDisplay(bool test, QWidget *parent) : QWidget(parent)
 {
-    background = NULL;
-
     if (test)
     {
         // test keys:
