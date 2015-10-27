@@ -11,6 +11,7 @@
 
 ValuesDisplay::ValuesDisplay(bool test, QWidget *parent) : QWidget(parent)
 {
+    ignore_updates = true;
     if (test)
     {
         // test keys:
@@ -61,7 +62,14 @@ void ValuesDisplay::SetValue(const QMap<QString, QString> &vals)
             v->SetFont(fnt);
             labels[it.key()] = v;
         }
-    update();
+    if (!ignore_updates)
+        update();
+}
+
+void ValuesDisplay::setVisible(bool visible)
+{
+    ignore_updates = visible;
+    QWidget::setVisible(visible);
 }
 
 void ValuesDisplay::paintEvent(QPaintEvent *e)

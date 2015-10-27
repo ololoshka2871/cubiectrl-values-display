@@ -38,9 +38,11 @@ private:
     QLabel *l;
     QPixmap background;
     QMap<QString, Value*> labels;
+    bool ignore_updates;
 
 public slots:
     void SetValue(const QMap<QString, QString>& vals);
+    virtual void setVisible(bool visible);
 
 protected:
     virtual void paintEvent(QPaintEvent *e);
